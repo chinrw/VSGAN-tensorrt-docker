@@ -1,21 +1,20 @@
-version: '3'
-
 services:
   vsgan_tensorrt:
     stdin_open: true # docker run -i
     tty: true        # docker run -t
-    image: styler00dollar/vsgan_tensorrt:latest
+    image: styler00dollar/vsgan_tensorrt:latest_no_avx512
     volumes:
       - ./:/workspace/tensorrt
+      - /mnt/g:/workspace/tensorrt/g
     privileged: true
+    environment:
+      LD_LIBRARY_PATH: /usr/lib/wsl/lib
     deploy:
       resources:
         reservations:
           devices:
-            - driver: nvidia
-              count: all
-              capabilities:
-                - gpu
-                - utility
-                - compute
-                - video
+            - driver: cdi
+              capabilities: [gpu]
+              device_ids:
+              - nvidia.com/gpu=all
+

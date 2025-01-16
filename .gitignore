@@ -6,3 +6,7 @@
 *.webm
 *.engine
 *.txt
+*.onnx
+
+./onnx
+./engine
